@@ -44,12 +44,16 @@ kind: Deployment
 metadata:
   name: fakeshop
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: fakeshop
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '5000'
+        prometheus.io/path: '/metrics'
       labels:
         app: fakeshop
     spec:
@@ -81,6 +85,6 @@ spec:
     app: fakeshop
   ports:
     - protocol: TCP
-      port: 80
+      port: 8080
       targetPort: 5000
   type: NodePort
